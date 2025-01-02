@@ -1,7 +1,6 @@
 # Multiprocessing vs Multithreading
 
-<!--multiprocessing means using multiple cores for different processes , essentially we are treating each core as a small little cpu .-->
-<!--while multithreading means using multiple cores for doing different parts of the same process.-->
+## multiprocessing means using multiple cores for different processes , essentially we are treating each core as a small little cpu, while multithreading means using multiple cores for doing different parts of the same process.
 
 ## **1. Multiprocessing**
 - **What it means**:  
