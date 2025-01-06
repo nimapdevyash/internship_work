@@ -6,6 +6,8 @@
 ## KEY NOTES
 - process.nextTick() and promises are executed in current phase just after the current operation completes.
 - microtasks queue executes the tasks as soon as they are enqued into it (after the completion of current operation offcourse..)
+- since chrome browser v8 engine uses libevent eventloop library and node uses libuv eventloop library there are two distinct eventloops,
+though now they share quite the same behavior but before node version 11 there were differences like execution of promises and process.nextTick() .
 
 ## phases of eventloop
 - |-> timers phase (setTimeout and setInterval are executed here)
