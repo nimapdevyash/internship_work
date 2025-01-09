@@ -3,6 +3,11 @@ import express from "express";
 // Create an Express app instance
 const app = express();
 
+// NOTE:
+// 1. The request body (raw data stream) is part of the req object.
+// 2. Logging req directly will not show the body because the stream hasn’t been read yet.
+// 3. To see the raw body, you must explicitly read the stream or use middleware. Without reading it, the data remains in the stream, which is an internal part of the req object.
+
 /**
  * Approach 1: Using Custom Middleware to Log Raw Body
  * - This approach manually reads the raw input stream (`req`) and logs the raw JSON string.
