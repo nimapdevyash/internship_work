@@ -1,2 +1,5 @@
 **/node_modules/
 .vscode/extensions.json
+.idea/internship_work.iml
+.idea/modules.xml
+.idea/vcs.xml
