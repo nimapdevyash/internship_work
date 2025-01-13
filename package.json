@@ -1,0 +1,25 @@
+{
+  "name": "internship_codes",
+  "version": "1.0.0",
+  "description": "\"# internship_work\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nimapdevyash/internship_work.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nimapdevyash/internship_work/issues"
+  },
+  "homepage": "https://github.com/nimapdevyash/internship_work#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "moment-timezone": "^0.5.46"
+  }
+}
