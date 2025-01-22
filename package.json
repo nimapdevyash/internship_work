@@ -20,6 +20,7 @@
   "homepage": "https://github.com/nimapdevyash/internship_work#readme",
   "dependencies": {
     "express": "^4.21.2",
-    "moment-timezone": "^0.5.46"
+    "moment-timezone": "^0.5.46",
+    "pg": "^8.13.1"
   }
 }
