@@ -61,7 +61,7 @@ async function createUser(req, res) {
 // get current user
 async function getCurrentUser(req, res) {
   try {
-    const userName = req.user;
+    const userName = req.user.userName;
 
     if (!userName) {
       return res.status(404).json({
@@ -70,7 +70,7 @@ async function getCurrentUser(req, res) {
       });
     }
 
-    const user = User.findOne({ where: userName });
+    const user = await User.findOne({ where: { userName } });
 
     if (!user) {
       throw new Error("user with this userId does not exist");
@@ -81,8 +81,8 @@ async function getCurrentUser(req, res) {
       user: {
         fullName: user.firstName + " " + user.lastName,
         userName,
-        message: "current user details fetched sucessfully",
       },
+      message: "current user details fetched sucessfully",
     });
   } catch (error) {
     console.log("error while fetching current user : ", error);

@@ -1,3 +1,4 @@
+import loadUser from "../middlewares/loadUser.js";
 import express from "express";
 import {
   createUser,
@@ -12,13 +13,13 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(getCurrentUser)
+  .get(loadUser, getCurrentUser)
   .post(createUser)
-  .put(updateUser)
-  .delete(deleteUser);
+  .put(loadUser, updateUser)
+  .delete(loadUser, deleteUser);
 
 router.route("/login").post(loginUser);
 
-router.route("/logout").get(logoutUser);
+router.route("/logout").get(loadUser, logoutUser);
 
 export default router;

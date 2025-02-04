@@ -1,7 +1,7 @@
 import User from "../models/user.js";
 import { verifyAcessToken } from "../services/jwt.js";
 
-function loadUser(req, res, next) {
+async function loadUser(req, res, next) {
   try {
     const token = req.cookies?.token;
 
@@ -13,12 +13,13 @@ function loadUser(req, res, next) {
     }
 
     const decodedToken = verifyAcessToken(token);
+    const userName = decodedToken.userName;
 
     if (!decodedToken) {
       return;
     }
 
-    const user = User.findOne(decodedToken);
+    const user = await User.findOne({ where: { userName } });
 
     if (!user) {
       throw new Error("invalid user");
@@ -29,7 +30,10 @@ function loadUser(req, res, next) {
     next();
   } catch (error) {
     console.log("couldn't load the user ", error);
-    return res.redirect("/login");
+    return res.status(500).json({
+      sucess: false,
+      message: error.message,
+    });
   }
 }
 
