@@ -4,3 +4,4 @@
 .idea/modules.xml
 .idea/vcs.xml
 Express/projects/sockets/.vscode/settings.json
+Express/projects/fileUploader/.env

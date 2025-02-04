@@ -1,8 +1,6 @@
 import { createAcessToken, verifyAcessToken } from "../services/jwt.js";
 import User from "../models/user";
 import bcrypt from "bcrypt";
-import { verify } from "jsonwebtoken";
-import { signedCookie, signedCookies } from "cookie-parser";
 
 // create
 async function createUser(req, res) {
