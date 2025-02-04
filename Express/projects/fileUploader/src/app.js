@@ -19,7 +19,7 @@ app.use("/user", userRouter);
 app.use("/file", fileRouter);
 
 app.get("/", (req, res) => {
-  res.send(new Date().toLocaleDateString());
+  res.send("app is working fine");
 });
 
 export default app;
