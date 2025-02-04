@@ -14,7 +14,7 @@ async function createUser(req, res) {
       });
     }
 
-    const hashedPassword = bcrypt.hashSync(password, process.env.SALT_ROUND);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     if (!hashedPassword) {
       throw new Error("couldn't hash the password");
@@ -24,10 +24,13 @@ async function createUser(req, res) {
       firstName,
       lastName,
       userName,
-      hashedPassword,
+      password: hashedPassword,
     });
 
-    const user = await User.findOne({ where: userName });
+    const user = await User.findOne({
+      where: { userName },
+      attributes: { exclude: ["password"] },
+    });
 
     if (!user) {
       return res.status(500).json({
@@ -47,6 +50,7 @@ async function createUser(req, res) {
       .json({
         sucess: true,
         message: "user created sucessfully",
+        user,
         accessToken: token,
       });
   } catch (error) {
