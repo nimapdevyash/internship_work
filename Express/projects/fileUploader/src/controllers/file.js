@@ -1,4 +1,4 @@
-import uploadOnCloudinary from "../services/cloudinary";
+import uploadOnCloudinary from "../services/cloudinary.js";
 import File from "../models/file.js";
 
 // upload

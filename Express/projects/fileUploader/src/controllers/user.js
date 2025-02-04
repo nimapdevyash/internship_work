@@ -1,5 +1,5 @@
 import { createAcessToken, verifyAcessToken } from "../services/jwt.js";
-import User from "../models/user";
+import User from "../models/user.js";
 import bcrypt from "bcrypt";
 
 // create
@@ -51,6 +51,37 @@ async function createUser(req, res) {
       });
   } catch (error) {
     console.log("error while creating user ", error);
+  }
+}
+
+// get current user
+async function getCurrentUser(req, res) {
+  try {
+    const userName = req.user;
+
+    if (!userName) {
+      return res.status(404).json({
+        sucess: false,
+        message: "login first",
+      });
+    }
+
+    const user = User.findOne({ where: userName });
+
+    if (!user) {
+      throw new Error("user with this userId does not exist");
+    }
+
+    return res.status(200).json({
+      sucess: true,
+      user: {
+        fullName: user.firstName + " " + user.lastName,
+        userName,
+        message: "current user details fetched sucessfully",
+      },
+    });
+  } catch (error) {
+    console.log("error while fetching current user : ", error);
   }
 }
 
@@ -195,4 +226,11 @@ async function logoutUser(req, res) {
   }
 }
 
-export { createUser, updateUser, deleteUser, loginUser, logoutUser };
+export {
+  createUser,
+  updateUser,
+  deleteUser,
+  loginUser,
+  logoutUser,
+  getCurrentUser,
+};
