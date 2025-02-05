@@ -15,9 +15,9 @@ router
   .route("/")
   .get(loadUser, getCurrentUser)
   .post(createUser)
-  .put(loadUser, updateUser);
+  .put(loadUser, updateUser)
+  .delete(loadUser, deleteUser);
 
-router.route("/:userName").delete(loadUser, deleteUser);
 router.route("/login").post(loginUser);
 router.route("/logout").get(loadUser, logoutUser);
 

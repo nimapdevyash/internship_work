@@ -127,13 +127,10 @@ async function updateUser(req, res) {
 // delete
 async function deleteUser(req, res) {
   try {
-    const userName = req.params.userName;
-
-    console.log("rP -> ", req.params);
+    const userName = req.user.userName;
 
     const user = await User.findOne({ where: { userName } });
 
-    console.log("usr -> ", user);
     if (!user) {
       return res.status(400).json({
         sucess: false,
