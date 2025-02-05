@@ -194,7 +194,6 @@ async function loginUser(req, res) {
       .json({
         sucess: true,
         message: "user loggedin sucessfully",
-        accessToken: token,
       });
   } catch (error) {
     console.log("couldn't login user ", error);
@@ -212,7 +211,7 @@ async function logoutUser(req, res) {
 
     const { userName } = verifyAcessToken(token);
 
-    const user = User.findOne({ where: userName });
+    const user = User.findOne({ where: { userName } });
 
     if (!user) {
       return res.status(500).json({
