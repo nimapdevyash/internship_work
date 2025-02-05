@@ -1,15 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
-import fs from "fs";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET,
-});
-
-async function uploadOnCloudinary(file) {
+async function uploadOnCloudinary(filePath) {
   try {
-    const response = await cloudinary.uploader.upload(file, {
+    const response = await cloudinary.uploader.upload(filePath, {
       unique_filename: true,
     });
 
@@ -17,12 +10,28 @@ async function uploadOnCloudinary(file) {
       throw new Error("file not uploaded correctlly");
     }
 
-    fs.unlinkSync(file);
+    const public_id = response.public_id;
+    const secure_url = response.secure_url;
 
-    return response.secure_url;
+    return { public_id, secure_url };
   } catch (error) {
     console.log("error while uploading file : ", error);
   }
 }
 
-export default uploadOnCloudinary;
+async function removeOnCloudinary(public_id) {
+  try {
+    const response = await cloudinary.uploader.destroy(public_id);
+
+    if (response.result !== "ok") {
+      throw new Error("file not deleted correctlly");
+    }
+
+    return true;
+  } catch (error) {
+    console.log("error while uploading file : ", error);
+    return false;
+  }
+}
+
+export { removeOnCloudinary, uploadOnCloudinary };

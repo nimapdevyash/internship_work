@@ -4,11 +4,24 @@ import { sequelize } from "../db/index.js";
 const File = sequelize.define(
   "File",
   {
-    fileName: {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    url: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    url: {
+    owner: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      references: {
+        model: "users",
+        key: "userName",
+      },
+    },
+    public_id: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -17,7 +30,5 @@ const File = sequelize.define(
     timestamps: true,
   }
 );
-
-File.sync({ force: true });
 
 export default File;

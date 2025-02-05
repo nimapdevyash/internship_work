@@ -55,6 +55,10 @@ async function createUser(req, res) {
       });
   } catch (error) {
     console.log("error while creating user ", error);
+    res.status(400).json({
+      sucess: false,
+      message: error?.errors[0]?.message || error.message,
+    });
   }
 }
 

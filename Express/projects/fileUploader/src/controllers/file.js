@@ -1,5 +1,9 @@
-import uploadOnCloudinary from "../services/cloudinary.js";
+import {
+  uploadOnCloudinary,
+  removeOnCloudinary,
+} from "../services/cloudinary.js";
 import File from "../models/file.js";
+import fs from "fs";
 
 // upload
 async function uploadFile(req, res) {
@@ -12,9 +16,21 @@ async function uploadFile(req, res) {
       throw new Error("file is not available locally");
     }
 
-    const url = uploadOnCloudinary(file);
+    const filePath = file.path;
 
-    const response = await File.create({ url, userName });
+    const { secure_url, public_id } = await uploadOnCloudinary(filePath);
+
+    if (!secure_url) {
+      throw new Error("invalid file url ");
+    }
+
+    fs.unlinkSync(filePath);
+
+    const response = await File.create({
+      url: secure_url,
+      owner: userName,
+      public_id,
+    });
 
     if (!response) {
       throw new Error("couldn't upload a file");
@@ -25,20 +41,27 @@ async function uploadFile(req, res) {
       message: "file uploaded sucessfully",
       image: {
         id: response.id,
-        url,
+        owner: response.owner,
+        public_id,
+        url: secure_url,
       },
     });
   } catch (error) {
     console.log("error while uploading the file ", error);
+    res.status(500).json({
+      sucess: false,
+      message: error.message,
+    });
   }
 }
 
 // delete
-async function deleteFile() {
+async function deleteFile(req, res) {
   try {
-    const imageId = req.params;
+    const imageId = req.params.imageId;
+    const userName = req.user.userName;
 
-    const file = File.findOne({
+    const file = await File.findOne({
       where: {
         id: imageId,
       },
@@ -46,6 +69,25 @@ async function deleteFile() {
 
     if (!file) {
       throw new Error("invalid imageId");
+    }
+
+    if (file.owner !== userName) {
+      return res.status(400).json({
+        sucess: false,
+        message: "unothorized access",
+      });
+    }
+
+    const public_id = file.public_id;
+
+    if (!public_id) {
+      throw new Error("invalid image , no Public_id");
+    }
+
+    const isRemoved = await removeOnCloudinary(public_id);
+
+    if (!isRemoved) {
+      throw new Error("image not deleted on cloudinary");
     }
 
     const response = await File.destroy({
@@ -64,11 +106,15 @@ async function deleteFile() {
     });
   } catch (error) {
     console.log("error while deleting a file ", error);
+    res.status(500).json({
+      sucess: false,
+      message: error.message,
+    });
   }
 }
 
 // all file for a particular user
-async function getUserFiles() {
+async function getUserFiles(req, res) {
   try {
     const userName = req.user.userName;
 
@@ -76,7 +122,9 @@ async function getUserFiles() {
       throw new Error("unothorized user");
     }
 
-    const { count, files } = await File.findAndCountAll({ where: userName });
+    const { count, rows: files } = await File.findAndCountAll({
+      where: { owner: userName },
+    });
 
     res.status(200).json({
       sucess: true,
@@ -86,6 +134,10 @@ async function getUserFiles() {
     });
   } catch (error) {
     console.log("error while fetching files for a user ", error);
+    res.status(500).json({
+      sucess: false,
+      message: error.message,
+    });
   }
 }
 
