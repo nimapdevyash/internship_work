@@ -161,7 +161,7 @@ async function loginUser(req, res) {
       });
     }
 
-    const user = await User.findOne({ where: userName });
+    const user = await User.findOne({ where: { userName } });
 
     if (!user) {
       return res.status(400).json({
@@ -193,7 +193,7 @@ async function loginUser(req, res) {
       .status(200)
       .json({
         sucess: true,
-        message: "user updated sucessfully",
+        message: "user loggedin sucessfully",
         accessToken: token,
       });
   } catch (error) {
