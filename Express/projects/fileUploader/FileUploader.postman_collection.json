@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "1e6a8a24-f557-4139-b312-4668471b8cce",
+		"name": "FileUploader",
+		"description": "a project feturing the crud operations and uploding of a file on the cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40888947"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "get current user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/user",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "returns the currently logged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "create user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"testOne\",\r\n    \"firstName\": \"test\",\r\n    \"lastName\": \"one\",\r\n    \"password\": \"one\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/user",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "creates a user"
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"testOne\",\r\n    \"firstName\": \"testUpdated\",\r\n    \"lastName\": \"one\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/user",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "can update the firstName or lastName of the currently logged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/user/",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						},
+						"description": "deletes the currently logged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"testOne\",\r\n    \"password\": \"one\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/user/login",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						},
+						"description": "login the user if the credentials are correct"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/user/logout",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"user",
+								"logout"
+							]
+						},
+						"description": "log out the currently loged in user"
+					},
+					"response": []
+				}
+			],
+			"description": "contains the crud operations on the user"
+		},
+		{
+			"name": "File",
+			"item": [
+				{
+					"name": "upload file",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileToUpload",
+									"type": "file",
+									"src": "/C:/Users/Nimap/Pictures/Screenshots/Screenshot (298).png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URI}}/file",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"file"
+							]
+						},
+						"description": "uploads file with file , with feild name : 'fileToUpload'"
+					},
+					"response": []
+				},
+				{
+					"name": "remove file",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/file/1",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"file",
+								"1"
+							]
+						},
+						"description": "removes the file with imageId 1 , if it belongs to the currently loged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "get current user's files",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/file",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"file"
+							]
+						},
+						"description": "get all the files uploaded by the currently loged in user"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
