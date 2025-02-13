@@ -126,7 +126,7 @@ async function deleteUser(req: Request, res: Response): Promise<any> {
       });
     }
 
-    await User.deleteOne({ userName });
+    await user.destroy();
 
     return res.status(200).json({
       sucess: true,
