@@ -1,13 +1,21 @@
-import mongoose from "mongoose";
+import { Sequelize } from "sequelize";
 
-async function connectToDB(): Promise<void> {
+const sequelize = new Sequelize({
+  host: "localhost",
+  dialect: "postgres",
+  username: "postgres",
+  password: "password",
+  port: 6000,
+});
+async function connectToDB() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/typescript_curd");
-    console.log("db connection sucessfull...");
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
   } catch (error) {
-    console.log("error while connecting to database : ", error);
-    process.exit(1);
+    console.error("Unable to connect to the database:", error);
   }
 }
 
 export default connectToDB;
+
+export { sequelize };
