@@ -10,10 +10,13 @@ function handleSingleFileUpload(req, res) {
   const fileData = fs.readFileSync(file.path);
 
   if (!fileData) {
+    fs.unlinkSync(file.path);
     return res.send("file is empty");
   }
 
   console.log(fileData.toString());
+
+  fs.unlinkSync(file.path);
 
   res.send("file read successfuly");
 }

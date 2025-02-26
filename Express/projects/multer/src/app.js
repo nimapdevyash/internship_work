@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 });
 
 app.use(
-  "/single-file",
+  "/is-infected",
   upload.single("file"),
   fileFilter,
   handleSingleFileUpload

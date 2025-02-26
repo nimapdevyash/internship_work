@@ -11,10 +11,12 @@ function handleBulkFileUpload(req, res) {
     const data = fs.readFileSync(file.path);
 
     if (!data) {
+      fs.unlinkSync(file.path);
       res.send(file.originalname + " -> " + "file is empty");
     }
 
     console.log("\n\n\n" + file.originalname + " -> \n\n " + data);
+    fs.unlinkSync(file.path);
   }
 
   res.send("all files are read successfuly");
