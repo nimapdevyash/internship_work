@@ -1,4 +1,5 @@
 const NodeClam = require("clamscan");
+const fs = require("fs");
 
 async function fileFilter(req, res, next) {
   try {
@@ -11,6 +12,7 @@ async function fileFilter(req, res, next) {
 
     const result = await clamscan.isInfected(req.file.path);
     if (result.isInfected === null || result.isInfected) {
+      fs.unlinkSync(req.file.path);
       res.send("file is infected");
     } else next();
   } catch (error) {
