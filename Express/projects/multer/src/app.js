@@ -3,6 +3,7 @@ const upload = require("./middlewares/multer");
 const handleBulkFileUpload = require("./controllers/handleBulkFileUpload");
 const handleSingleFileUpload = require("./controllers/handleSingleFIleUpoad");
 const handleSpecificFileTypeUpload = require("./controllers/handleSpecificFileUpload");
+const fileFilter = require("./middlewares/clamscan");
 
 const app = express();
 
@@ -15,7 +16,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/single-file", upload.single("file"), handleSingleFileUpload);
+app.use(
+  "/single-file",
+  upload.single("file"),
+  fileFilter,
+  handleSingleFileUpload
+);
 app.use("/bulk-files", upload.array("files"), handleBulkFileUpload);
 app.use("/specific-file", upload.single("file"), handleSpecificFileTypeUpload);
 
