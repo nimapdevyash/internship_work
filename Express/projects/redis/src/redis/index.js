@@ -48,6 +48,10 @@ async function remove(req, res) {
 async function update(req, res) {
   let { key, value } = req.body;
   try {
+    let pairExists = await client.get(key);
+    if (pairExists) {
+      throw new Error("key is already taken");
+    }
     await client.set(key, value);
     res.send("key value pair updated");
   } catch (error) {
