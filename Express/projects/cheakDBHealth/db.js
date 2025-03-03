@@ -20,7 +20,9 @@ async function connectToDb() {
 async function cheakDBHealth(req, res) {
   try {
     let start = Date.now();
-    let connection = await sequelize.query("select 1 ;");
+
+    // dummy query to cheak response time
+    await sequelize.query("select 1 ;");
     let end = Date.now();
 
     if (end - start > 500) {
