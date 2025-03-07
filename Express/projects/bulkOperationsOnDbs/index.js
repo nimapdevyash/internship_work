@@ -1,5 +1,6 @@
 const app = require("./src/app");
-const connectToDB = require("./src/db/mongoose");
+// const connectToDB = require("./src/db/mongoose");
+const { connectToDB } = require("./src/db/sequelize");
 
 connectToDB();
 

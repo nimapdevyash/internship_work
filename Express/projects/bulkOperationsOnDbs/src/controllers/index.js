@@ -1,9 +1,16 @@
+// const {
+//   bulkInsert,
+//   bulkDelete,
+//   bulkUpdate,
+//   bulkFind,
+// } = require("../bulkOperations/mongoose");
+
 const {
   bulkInsert,
   bulkDelete,
   bulkUpdate,
   bulkFind,
-} = require("../bulkOperations/mongoose");
+} = require("../bulkOperations/sequelize");
 
 async function handleBulkInsert(req, res) {
   try {
@@ -21,7 +28,6 @@ async function handleBulkInsert(req, res) {
       data: result,
     });
   } catch (error) {
-    console.log("error while bulk inserting : ", error);
     res.status(400).json({
       error,
     });
@@ -33,7 +39,7 @@ async function handleBulkDelete(req, res) {
     const data = req.body;
 
     if (!data) {
-      return res.status(400).send("data is required");
+      return res.status(404).json({ error: "data is required" });
     }
 
     const result = await bulkDelete(data);
@@ -43,12 +49,11 @@ async function handleBulkDelete(req, res) {
         result.deletedCount !== 0
           ? "usrs deleted successfully"
           : "no usrs deleted",
-      data: result,
+      deleteCount: result,
     });
   } catch (error) {
-    console.log("error while bulk deleting : ", error);
     res.send(400).json({
-      error,
+      error: error.message || "error while deleting",
     });
   }
 }
@@ -64,9 +69,8 @@ async function handleBulkUpdate(req, res) {
       data: result,
     });
   } catch (error) {
-    console.log("error while bulk updating : ", error);
-    res.send(400).json({
-      error,
+    res.status(400).json({
+      error: error.message || "encounterd and error",
     });
   }
 }
@@ -76,7 +80,9 @@ async function handleBulkFind(req, res) {
     const data = req.body;
 
     if (!data) {
-      return res.status(400).send("data is required");
+      return res.status(400).json({
+        error: "data is required",
+      });
     }
 
     const result = await bulkFind(data);
@@ -86,9 +92,8 @@ async function handleBulkFind(req, res) {
       data: result,
     });
   } catch (error) {
-    console.log("error while bulk finding : ", error);
-    res.send(400).json({
-      error,
+    res.status(400).json({
+      error: error.message || "encounterd and error",
     });
   }
 }

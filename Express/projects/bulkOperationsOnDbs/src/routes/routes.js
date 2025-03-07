@@ -5,7 +5,7 @@ const {
   handleBulkUpdate,
   handleBulkDelete,
   handleBulkFind,
-} = require("../controllers/mongoose");
+} = require("../controllers/index");
 
 const router = express.Router();
 
