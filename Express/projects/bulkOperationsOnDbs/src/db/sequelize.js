@@ -18,7 +18,7 @@ async function connectToDB() {
 }
 
 // prevent sequelize from writing logs
-// sequelize.options.logging = false;
+sequelize.options.logging = false;
 
 module.exports = {
   sequelize,
