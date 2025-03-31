@@ -9,14 +9,13 @@ Welcome to the **Internship Work** repository! This repository contains all my p
 
 ```
 /internship_work
-│── express/     # Express.js projects and implementations
-│── js/          # JavaScript-related code and projects
-│── node/        # Node.js applications and experiments
-│── postgres/    # PostgreSQL database queries and optimizations
-│── websockets/  # WebSocket implementations and real-time communication
+│── Express/         # Express.js projects and implementations
+│── JavaScript/      # JavaScript-related code and projects
+│── Node/            # Node.js applications and experiments
+│── PostgreSQL/      # PostgreSQL database queries and optimizations
+│── Websockets/      # WebSocket implementations and real-time communication
+│── Databases/       # Database related notes , like indexing and query optimizations
 ```
-
-This structure keeps the repository organized and makes it easy to navigate.
 
 ---
 
